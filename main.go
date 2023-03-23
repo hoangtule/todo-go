@@ -4,15 +4,13 @@ import (
 	"net/http"
 
 	"new-example/entity"
-	"new-example/repo"
 	"new-example/service"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	repo := repo.NewTodoRepository()
-	service := service.NewTodoService(repo)
+	service := service.NewTodoService()
 
 	router := gin.Default()
 

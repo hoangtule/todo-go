@@ -19,9 +19,11 @@ type todoService struct {
 	todoRepo repo.TodoRepository
 }
 
-func NewTodoService(todoRepo repo.TodoRepository) TodoService {
+func NewTodoService() TodoService {
+	repo := repo.NewTodoRepository()
+
 	return &todoService{
-		todoRepo: todoRepo,
+		todoRepo: repo,
 	}
 }
 
