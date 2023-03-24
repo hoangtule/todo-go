@@ -16,7 +16,7 @@ type TodoRepositoryImpl struct {
 }
 
 func (repo *TodoRepositoryImpl) InitDB() error {
-	db, err := Init()
+	db, err := Init("./database.db")
 	if err != nil {
 		return err
 	}
