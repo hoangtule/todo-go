@@ -4,51 +4,48 @@ import (
 	"errors"
 
 	"new-example/entity"
-	"new-example/repo"
 )
 
-type TodoService interface {
-	GetAll() ([]*entity.Todo, error)
+type TodoRepository interface {
+	InitDB()
 	GetByID(id string) (*entity.Todo, error)
+	GetAll() ([]*entity.Todo, error)
 	Create(todo *entity.Todo) (*entity.Todo, error)
 	Update(id string, todo *entity.Todo) (*entity.Todo, error)
 	Delete(id string) error
 }
 
-type todoService struct {
-	todoRepo repo.TodoRepository
+type TodoService struct {
+	TodoRepo TodoRepository
 }
 
-func NewTodoService() TodoService {
-	repo := repo.NewTodoRepository()
-
-	return &todoService{
-		todoRepo: repo,
-	}
+func (s *TodoService) InitDB() {
 }
 
-func (s *todoService) GetAll() ([]*entity.Todo, error) {
-	return s.todoRepo.GetAll()
+func (s *TodoService) GetAll() ([]*entity.Todo, error) {
+	return s.TodoRepo.GetAll()
 }
 
-func (s *todoService) GetByID(id string) (*entity.Todo, error) {
-	return s.todoRepo.GetByID(id)
+func (s *TodoService) GetByID(id string) (*entity.Todo, error) {
+	//... biz
+	//...
+	return s.TodoRepo.GetByID(id)
 }
 
-func (s *todoService) Create(todo *entity.Todo) (*entity.Todo, error) {
+func (s *TodoService) Create(todo *entity.Todo) (*entity.Todo, error) {
 	if todo.Title == "" {
 		return nil, errors.New("Title cannot be empty")
 	}
-	return s.todoRepo.Create(todo)
+	return s.TodoRepo.Create(todo)
 }
 
-func (s *todoService) Update(id string, todo *entity.Todo) (*entity.Todo, error) {
+func (s *TodoService) Update(id string, todo *entity.Todo) (*entity.Todo, error) {
 	if todo.Title == "" {
 		return nil, errors.New("Title cannot be empty")
 	}
-	return s.todoRepo.Update(id, todo)
+	return s.TodoRepo.Update(id, todo)
 }
 
-func (s *todoService) Delete(id string) error {
-	return s.todoRepo.Delete(id)
+func (s *TodoService) Delete(id string) error {
+	return s.TodoRepo.Delete(id)
 }

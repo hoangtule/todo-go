@@ -12,6 +12,10 @@ type TodoRepositoryImpl struct {
 	todos []*entity.Todo
 }
 
+func (repo *TodoRepositoryImpl) InitDB() {
+
+}
+
 func (repo *TodoRepositoryImpl) GetByID(id string) (*entity.Todo, error) {
 	for _, todo := range repo.todos {
 		if todo.ID == id {
@@ -53,8 +57,8 @@ func (repo *TodoRepositoryImpl) Delete(id string) error {
 	return errors.New("Todo not found")
 }
 
-func NewTodoRepository() TodoRepository {
-	return &TodoRepositoryImpl{
-		todos: make([]*entity.Todo, 0),
-	}
-}
+// func NewTodoRepository() TodoRepository {
+// 	return &TodoRepositoryImpl{
+// 		todos: make([]*entity.Todo, 0),
+// 	}
+// }
