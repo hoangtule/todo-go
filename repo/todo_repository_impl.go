@@ -12,8 +12,8 @@ type TodoRepositoryImpl struct {
 	todos []*entity.Todo
 }
 
-func (repo *TodoRepositoryImpl) InitDB() {
-
+func (repo *TodoRepositoryImpl) InitDB() error {
+	return nil
 }
 
 func (repo *TodoRepositoryImpl) GetByID(id string) (*entity.Todo, error) {

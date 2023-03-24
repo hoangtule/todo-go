@@ -7,7 +7,7 @@ import (
 )
 
 type TodoRepository interface {
-	InitDB()
+	InitDB() error
 	GetByID(id string) (*entity.Todo, error)
 	GetAll() ([]*entity.Todo, error)
 	Create(todo *entity.Todo) (*entity.Todo, error)
@@ -19,7 +19,8 @@ type TodoService struct {
 	TodoRepo TodoRepository
 }
 
-func (s *TodoService) InitDB() {
+func (s *TodoService) InitDB() error {
+	return nil
 }
 
 func (s *TodoService) GetAll() ([]*entity.Todo, error) {

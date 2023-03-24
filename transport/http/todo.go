@@ -8,7 +8,7 @@ import (
 )
 
 type TodoBusinessService interface {
-	InitDB()
+	InitDB() error
 	GetByID(id string) (*entity.Todo, error)
 	GetAll() ([]*entity.Todo, error)
 	Create(todo *entity.Todo) (*entity.Todo, error)

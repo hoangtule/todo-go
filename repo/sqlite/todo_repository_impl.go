@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"math/rand"
+	"strconv"
 	"time"
 
 	"new-example/entity"
@@ -66,7 +68,15 @@ func (repo *TodoRepositoryImpl) GetAll() ([]*entity.Todo, error) {
 	return todos, nil
 }
 
+func GenerateRandomID() string {
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+	randNum := rand.Int63n(1000)
+	id := timestamp*1000 + randNum
+	return strconv.FormatInt(id, 10)
+}
+
 func (repo *TodoRepositoryImpl) Create(todo *entity.Todo) (*entity.Todo, error) {
+	todo.ID = GenerateRandomID()
 	todo.CreatedAt = time.Now()
 
 	err := CreateTodo(repo.db, todo)

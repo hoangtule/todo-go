@@ -2,7 +2,7 @@ package main
 
 //"new-example/repo/sqlite"
 import (
-	"new-example/repo"
+	"new-example/repo/sqlite"
 	"new-example/service"
 	"new-example/transport/http"
 
@@ -11,7 +11,7 @@ import (
 
 func main() {
 	//
-	todoRepo := &repo.TodoRepositoryImpl{}
+	todoRepo := &sqlite.TodoRepositoryImpl{}
 	todoRepo.InitDB()
 
 	//
