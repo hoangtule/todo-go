@@ -2,7 +2,6 @@ package sqlite
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -31,41 +30,11 @@ func (repo *TodoRepositoryImpl) InitDB() error {
 }
 
 func (repo *TodoRepositoryImpl) GetByID(id string) (*entity.Todo, error) {
-	todo := &entity.Todo{}
-
-	row := repo.db.QueryRow(`SELECT id, title, description, created_at, updated_at, completed_at FROM todos WHERE id = ?`, id)
-	err := row.Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CreatedAt, &todo.UpdatedAt, &todo.CompletedAt)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, fmt.Errorf("todo not found: %v", err)
-		}
-		return nil, fmt.Errorf("could not get todo: %v", err)
-	}
-
-	return todo, nil
+	return GetTodoByID(repo.db, id)
 }
 
 func (repo *TodoRepositoryImpl) GetAll() ([]*entity.Todo, error) {
-	var todos []*entity.Todo
-
-	rows, err := repo.db.Query(`SELECT id, title, description, created_at, updated_at, completed_at FROM todos`)
-	if err != nil {
-		return nil, fmt.Errorf("could not get todos: %v", err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		todo := &entity.Todo{}
-
-		err = rows.Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CreatedAt, &todo.UpdatedAt, &todo.CompletedAt)
-		if err != nil {
-			return nil, fmt.Errorf("could not get todo: %v", err)
-		}
-
-		todos = append(todos, todo)
-	}
-
-	return todos, nil
+	return GetTodos(repo.db)
 }
 
 func GenerateRandomID() string {
