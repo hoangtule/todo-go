@@ -1,0 +1,17 @@
+FROM golang:1.16.4-alpine
+
+WORKDIR /app
+
+COPY entity ./entity
+
+COPY repo ./repo
+
+COPY service ./service
+
+COPY transport ./transport
+
+RUN go build -o main .
+
+EXPOSE 8080
+
+CMD ["./main"]
