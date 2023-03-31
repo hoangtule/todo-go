@@ -1,8 +1,8 @@
 package main
 
-//"new-example/repo/sqlite"
 import (
-	"new-example/repo/sqlite"
+	//"new-example/repo/sqlite"
+	"new-example/repo/postgresql"
 	"new-example/service"
 	"new-example/transport/http"
 
@@ -11,7 +11,7 @@ import (
 
 func main() {
 	//
-	todoRepo := &sqlite.TodoRepositoryImpl{}
+	todoRepo := &postgresql.TodoRepositoryImpl{}
 	todoRepo.InitDB()
 
 	//

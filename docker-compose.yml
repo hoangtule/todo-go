@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  db:
+    image: grpc-todo/db:1.0
+    build: 
+      context: .
+      dockerfile: Dockerfile.database
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: pg_isready -U postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  server-go:
+    image: grpc-todo/server:1.0
+    build: 
+      context: .
+      dockerfile: Dockerfile.server
+    depends_on: 
+      db:
+        condition: service_healthy
+    ports:
+      - '8080:8080'
+    volumes:
+      - .:/app
+  client-react:
+    image: grpc-todo/react:1.0
+    build: 
+      context: .
+      dockerfile: Dockerfile.react
+    depends_on:
+      - server-go
+    ports:
+      - '3000:3000'
+  envoy-proxy:
+    image: grpc-todo/envoy:1.0
+    build: 
+      context: .
+      dockerfile: Dockerfile.envoy
+    network_mode: "host"
+volumes:
+  postgres:
