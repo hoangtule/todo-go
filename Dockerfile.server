@@ -2,19 +2,21 @@ FROM golang:1.17-alpine
 
 WORKDIR /app
 
-COPY go.mod ./
+COPY . .
 
-COPY go.sum ./
+#COPY go.mod ./
 
-COPY main.go ./
+#COPY go.sum ./
 
-COPY entity ./entity
+#COPY main.go ./
 
-COPY repo ./repo
+#COPY entity ./entity
 
-COPY service ./service
+#COPY repo ./repo
 
-COPY transport ./transport
+#COPY service ./service
+
+#COPY transport ./transport
 
 RUN go mod download
 
