@@ -23,20 +23,5 @@ services:
       - '8080:8080'
     volumes:
       - .:/app
-  client-react:
-    image: grpc-todo/react:1.0
-    build: 
-      context: .
-      dockerfile: Dockerfile.react
-    depends_on:
-      - server-go
-    ports:
-      - '3000:3000'
-  envoy-proxy:
-    image: grpc-todo/envoy:1.0
-    build: 
-      context: .
-      dockerfile: Dockerfile.envoy
-    network_mode: "host"
 volumes:
   postgres:

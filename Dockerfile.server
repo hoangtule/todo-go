@@ -1,6 +1,12 @@
-FROM golang:1.16.4-alpine
+FROM golang:1.17-alpine
 
 WORKDIR /app
+
+COPY go.mod ./
+
+COPY go.sum ./
+
+COPY main.go ./
 
 COPY entity ./entity
 
@@ -10,7 +16,13 @@ COPY service ./service
 
 COPY transport ./transport
 
-RUN go build -o main .
+RUN go mod download
+
+RUN apk update && apk add gcc libc-dev
+
+RUN apk update && apk add gcc
+
+RUN go build main.go
 
 EXPOSE 8080
 
